@@ -1,0 +1,23 @@
+<div id="chat-container">
+  <div id="chat-room">
+    <div class="chat-message">Welcome to the chat room.</div>
+  </div>
+  <div id="chat-interface" action="">
+    <textarea id="chat-input-field" autocomplete="off"></textarea>
+    <button id="chat-button">Chat</button>
+  </div>
+</div>
+
+<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+<script>
+var socket = io('http://localhost:4201');
+$('#chat-button').on('click', function(){
+  socket.emit('chat message', $('#chat-input-field').val());
+  $('#chat-input-field').val('');
+  return false;
+});
+socket.on('chat message', function(msg){
+  $('#chat-room').append($('<div>').text(msg));
+});
+</script>
